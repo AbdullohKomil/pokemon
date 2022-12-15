@@ -2,4 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.top-pokemons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.select-scss {
+  width: 200px;
+  border: none;
+  padding: 10px;
+}
+
+.select-scss:focus {
+  outline: none;
 }/*# sourceMappingURL=main.css.map */

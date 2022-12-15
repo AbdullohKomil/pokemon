@@ -1,29 +1,60 @@
-function MyFunction(pokemons) {
-  for (i of pokemons) {
-    var clRow = document.querySelector(".row");
+function pokemonfunc(pokemons) {
+  var clRow = document.querySelector(".row");
+  clRow.textContent = "";
+  for (var a of pokemons) {
     var createColBox = document.createElement("div");
-    var editClassCol = createColBox.classList.add("col-3", "text-center", "bg-success","mb-5","ms-2","text-light");
+    var editClassCol = createColBox.classList.add(
+      "col-3",
+      "text-center",
+      "bg-success",
+      "mb-5",
+      "ms-2",
+      "text-light"
+    );
+
     var pushToRow = clRow.appendChild(createColBox);
 
     var createImg = document.createElement("img");
-    createImg.setAttribute('src', i.img)
-    createColBox.appendChild(createImg)
+    createImg.setAttribute("src", a.img);
+    createColBox.appendChild(createImg);
 
     var createName = document.createElement("h3");
-    createName.innerHTML = i.name
-    createColBox.appendChild(createName)
+    createName.innerHTML = a.name;
+    createColBox.appendChild(createName);
 
     var createCandy = document.createElement("p");
-    createCandy.innerHTML = i.candy;
-    createColBox.appendChild(createCandy)
+    createCandy.innerHTML = a.candy;
+    createColBox.appendChild(createCandy);
 
     var createnum = document.createElement("p");
-    createnum.innerHTML = i.num;
-    createColBox.appendChild(createnum)
+    createnum.innerHTML = a.num;
+    createColBox.appendChild(createnum);
 
     var createSpawnTime = document.createElement("p");
-    createSpawnTime.innerHTML = i.spawn_time;
-    createColBox.appendChild(createSpawnTime)
+    createSpawnTime.innerHTML = a.spawn_time;
+    createColBox.appendChild(createSpawnTime);
   }
 }
-MyFunction(pokemons);
+var types = [
+  "Poison","Fire","Grass","Water","Electric","Bug","Normal","Ground","Fighting","Psychic","Rock","Ice","Ghost","Flying","Dragon",
+];
+
+var pokemonsVar = pokemons;
+
+var elSelect = document.querySelector("#select-js");
+for (var i of types) {
+  var elOption = document.createElement("option");
+  elOption.value = i;
+  elOption.textContent = i;
+  elSelect.appendChild(elOption);
+}
+
+elSelect.addEventListener("change", (element) => {
+  var type = element.target.value;
+  pokemonsVar = pokemons.filter((pok) => {
+    return pok.type.includes(type);
+  });
+  pokemonfunc(pokemonsVar);
+});
+
+pokemonfunc(pokemonsVar);
