@@ -1,7 +1,8 @@
-function pokemonfunc(pokemons) {
-  var clRow = document.querySelector(".row");
-  clRow.textContent = "";
-  for (var a of pokemons) {
+var clRow = document.querySelector(".row");
+clRow.textContent = "";
+function Myfunc(array, node) {
+  node.innerHTML = "";
+  for (var a of array) {
     var createColBox = document.createElement("div");
     var editClassCol = createColBox.classList.add(
       "col-3",
@@ -12,7 +13,7 @@ function pokemonfunc(pokemons) {
       "text-light"
     );
 
-    var pushToRow = clRow.appendChild(createColBox);
+    var pushToRow = node.appendChild(createColBox);
 
     var createImg = document.createElement("img");
     createImg.setAttribute("src", a.img);
@@ -35,26 +36,37 @@ function pokemonfunc(pokemons) {
     createColBox.appendChild(createSpawnTime);
   }
 }
-var types = [
-  "Poison","Fire","Grass","Water","Electric","Bug","Normal","Ground","Fighting","Psychic","Rock","Ice","Ghost","Flying","Dragon",
-];
 
-var pokemonsVar = pokemons;
-
+Myfunc(pokemons, clRow);
 var elSelect = document.querySelector("#select-js");
-for (var i of types) {
-  var elOption = document.createElement("option");
-  elOption.value = i;
-  elOption.textContent = i;
-  elSelect.appendChild(elOption);
-}
 
-elSelect.addEventListener("change", (element) => {
-  var type = element.target.value;
-  pokemonsVar = pokemons.filter((pok) => {
-    return pok.type.includes(type);
-  });
-  pokemonfunc(pokemonsVar);
+let newArr = [];
+elSelect.addEventListener("change", function () {
+  newArr = [];
+
+  if (elSelect.value != "All") {
+    pokemons.forEach((poc) => {
+      if (poc.type.includes(elSelect.value)) {
+        newArr.push(poc);
+        Myfunc(newArr, clRow);
+      } else {
+        Myfunc(newArr, clRow);
+      }
+    });
+  }
 });
 
-pokemonfunc(pokemonsVar);
+var selectOptions = [];
+let newSet = new Set();
+pokemons.forEach((item) => {
+  item.type.forEach((type) => {
+    newSet.add(type);
+  });
+});
+console.log(newSet);
+newSet.forEach((type) => {
+  var elOption = document.createElement("option");
+  elOption.value = type;
+  elOption.textContent = type;
+  elSelect.appendChild(elOption);
+});
