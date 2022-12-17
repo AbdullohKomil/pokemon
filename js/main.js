@@ -49,10 +49,11 @@ elSelect.addEventListener("change", function () {
       if (poc.type.includes(elSelect.value)) {
         newArr.push(poc);
         Myfunc(newArr, clRow);
-      } else {
-        Myfunc(newArr, clRow);
       }
     });
+    Myfunc(newArr, clRow);
+  }else {
+    Myfunc(pokemons, clRow);
   }
 });
 
