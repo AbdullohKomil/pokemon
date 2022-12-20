@@ -72,9 +72,7 @@ newSet.forEach((type) => {
   elSelect.appendChild(elOption);
 });
 let elSelect_2 = document.querySelector("#select-js-2");
-elSelect_2.addEventListener('change' , () =>{
 
-})
 elSelect_2.addEventListener("change", () => {
   let elSelect_2Val = elSelect_2.value;
   if (elSelect_2Val != "default") {
