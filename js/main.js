@@ -90,7 +90,7 @@ elSelect_2.addEventListener("change", () => {
       });
       Myfunc(pokemonSort, clRow);
     } else if (elSelect_2Val == "Z-A") {
-      const pokemonSort_2 = newArr2.sort((a, b) => {
+      const pokemonSort_2 = pokemons.sort((a, b) => {
         if (a.name > b.name) {
           return -1;
         }
