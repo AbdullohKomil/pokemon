@@ -52,7 +52,7 @@ elSelect.addEventListener("change", function () {
       }
     });
     Myfunc(newArr, clRow);
-  }else {
+  } else {
     Myfunc(pokemons, clRow);
   }
 });
@@ -64,10 +64,45 @@ pokemons.forEach((item) => {
     newSet.add(type);
   });
 });
-console.log(newSet);
+// console.log(newSet);
 newSet.forEach((type) => {
   var elOption = document.createElement("option");
   elOption.value = type;
   elOption.textContent = type;
   elSelect.appendChild(elOption);
 });
+let elSelect_2 = document.querySelector("#select-js-2");
+elSelect_2.addEventListener('change' , () =>{
+
+})
+elSelect_2.addEventListener("change", () => {
+  let elSelect_2Val = elSelect_2.value;
+  if (elSelect_2Val != "default") {
+    if (elSelect_2Val == "A-Z") {
+      const pokemonSort = pokemons.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+        return 0;
+      });
+      Myfunc(pokemonSort, clRow);
+    } else if (elSelect_2Val == "Z-A") {
+      const pokemonSort_2 = newArr2.sort((a, b) => {
+        if (a.name > b.name) {
+          return -1;
+        }
+        if (a.name < b.name) {
+          return 1;
+        }
+        return 0;
+      });
+      Myfunc(pokemonSort_2, clRow);
+    }
+  }else {
+    window.location.reload();
+  }
+});
+
