@@ -1,5 +1,13 @@
-var clRow = document.querySelector(".row");
-clRow.textContent = "";
+var elRow = document.querySelector(".row");
+// const elBookmark = document.querySelector('.col-4')
+
+// let data = JSON.parse(window.localStorage.getItem('bookmark'))
+
+// let bookmarkList = data || []
+
+// bookmarkRender(bookmarkList,elBookmark)
+
+elRow.textContent = "";
 function Myfunc(array, node) {
   node.innerHTML = "";
   for (var a of array) {
@@ -7,7 +15,6 @@ function Myfunc(array, node) {
     var editClassCol = createColBox.classList.add(
       "col-3",
       "text-center",
-      "bg-success",
       "mb-5",
       "ms-2",
       "text-light"
@@ -37,7 +44,7 @@ function Myfunc(array, node) {
   }
 }
 
-Myfunc(pokemons, clRow);
+Myfunc(pokemons, elRow);
 var elSelect = document.querySelector("#select-js");
 
 let newArr = [];
@@ -48,12 +55,12 @@ elSelect.addEventListener("change", function () {
     pokemons.forEach((poc) => {
       if (poc.type.includes(elSelect.value)) {
         newArr.push(poc);
-        Myfunc(newArr, clRow);
+        Myfunc(newArr, elRow);
       }
     });
-    Myfunc(newArr, clRow);
+    Myfunc(newArr, elRow);
   } else {
-    Myfunc(pokemons, clRow);
+    Myfunc(pokemons, elRow);
   }
 });
 
@@ -86,7 +93,7 @@ elSelect_2.addEventListener("change", () => {
         }
         return 0;
       });
-      Myfunc(pokemonSort, clRow);
+      Myfunc(pokemonSort, elRow);
     } else if (elSelect_2Val == "Z-A") {
       const pokemonSort_2 = pokemons.sort((a, b) => {
         if (a.name > b.name) {
@@ -97,10 +104,43 @@ elSelect_2.addEventListener("change", () => {
         }
         return 0;
       });
-      Myfunc(pokemonSort_2, clRow);
+      Myfunc(pokemonSort_2, elRow);
     }
   }else {
     window.location.reload();
   }
 });
+
+// elRow.addEventListener('click' ,(evt) => {
+//   if(evt.target.matches('.bookmark-btn')) {
+//     let pokemonfind = pokemons.find((el) => el.id == evt.target)
+//   }
+// })
+
+
+
+
+
+
+
+
+
+const btnMode = document.querySelector('.dark-mode-btn')
+let theme = false
+
+btnMode.addEventListener('click' , () => {
+  theme =!theme
+  const bg = theme ? "dark" : "light";
+  window.localStorage.setItem('theme' , bg)
+  changeTheme()
+})
+
+function changeTheme () {
+  if(window.localStorage.getItem('theme') == 'dark') {
+    document.body.classList.add('dark')
+  } else {
+    document.body.classList.remove('dark')
+  }
+}
+changeTheme()
 
