@@ -1,11 +1,8 @@
 var elRow = document.querySelector(".row");
-// const elBookmark = document.querySelector('.col-4')
 
-// let data = JSON.parse(window.localStorage.getItem('bookmark'))
+let elBookmarkList = document.querySelector(".bookmark-js-list");
 
-// let bookmarkList = data || []
-
-// bookmarkRender(bookmarkList,elBookmark)
+let bookmarkList = new Set();
 
 elRow.textContent = "";
 function Myfunc(array, node) {
@@ -41,6 +38,12 @@ function Myfunc(array, node) {
     var createSpawnTime = document.createElement("p");
     createSpawnTime.innerHTML = a.spawn_time;
     createColBox.appendChild(createSpawnTime);
+
+    const newBtn = document.createElement("button");
+    newBtn.textContent = "bookmark";
+    newBtn.dataset.pokemonId = a.id;
+    newBtn.setAttribute("class", "btn btn-light js-bookmark");
+    createColBox.appendChild(newBtn);
   }
 }
 
@@ -106,41 +109,69 @@ elSelect_2.addEventListener("change", () => {
       });
       Myfunc(pokemonSort_2, elRow);
     }
-  }else {
+  } else {
     window.location.reload();
   }
 });
 
-// elRow.addEventListener('click' ,(evt) => {
-//   if(evt.target.matches('.bookmark-btn')) {
-//     let pokemonfind = pokemons.find((el) => el.id == evt.target)
-//   }
-// })
+const btnMode = document.querySelector(".dark-mode-btn");
+let theme = false;
 
-
-
-
-
-
-
-
-
-const btnMode = document.querySelector('.dark-mode-btn')
-let theme = false
-
-btnMode.addEventListener('click' , () => {
-  theme =!theme
+btnMode.addEventListener("click", () => {
+  theme = !theme;
   const bg = theme ? "dark" : "light";
-  window.localStorage.setItem('theme' , bg)
-  changeTheme()
-})
+  window.localStorage.setItem("theme", bg);
+  changeTheme();
+});
 
-function changeTheme () {
-  if(window.localStorage.getItem('theme') == 'dark') {
-    document.body.classList.add('dark')
+function changeTheme() {
+  if (window.localStorage.getItem("theme") == "dark") {
+    document.body.classList.add("dark");
   } else {
-    document.body.classList.remove('dark')
+    document.body.classList.remove("dark");
   }
 }
-changeTheme()
+changeTheme();
 
+const renderBookmarkPokemons = (array, node) => {
+  node.innerHTML = "";
+  array.forEach((item) => {
+    const newItem = document.createElement("li");
+    const newText = document.createElement("p");
+    const newDeleteButton = document.createElement("button");
+
+    newItem.setAttribute("class", " align-items-center p-1 bg-dark d-flex ");
+    newText.setAttribute("class", "m-0 text-light me-3");
+    newDeleteButton.setAttribute("class", "delete-bookmark");
+
+    newText.textContent = item.name;
+    newDeleteButton.innerHTML = "&times;";
+    newDeleteButton.dataset.pokemonId = item.id;
+    newItem.appendChild(newText);
+    newItem.appendChild(newDeleteButton);
+    node.appendChild(newItem);
+  });
+};
+
+elRow.addEventListener("click", (evt) => {
+  if (evt.target.matches(".js-bookmark")) {
+    const pokemonId = evt.target.dataset.pokemonId;
+
+    const findedPokemon = pokemons.find((pokemon) => pokemon.id == pokemonId);
+
+    bookmarkList.add(findedPokemon);
+
+    renderBookmarkPokemons(bookmarkList, elBookmarkList);
+  }
+});
+
+elBookmarkList.addEventListener("click", (evt) => {
+  if (evt.target.matches(".delete-bookmark")) {
+    const pokemonid = evt.target.dataset.pokemonId;
+
+    const findedPokemon = pokemons.find((pokemon) => pokemon.id == pokemonid);
+
+    bookmarkList.delete(findedPokemon);
+    renderBookmarkPokemons(bookmarkList, elBookmarkList);
+  }
+});
